@@ -82,6 +82,26 @@ echo "==========================================="
 
 # assembly
 
+echo "===== asm ====="
+
+echo "$ $ASM -f elf64 src/tiny.asm -o $BUILD/tiny-asm-$ASM.o"
+$ASM -f elf64 src/tiny.asm -o $BUILD/tiny-asm-$ASM.o
+
+for CC in $CC_LIST; do
+    echo "$ $CC -s $BUILD/tiny-asm-$ASM.o -o tiny-asm-$ASM-$CC"
+    $CC -s $BUILD/tiny-asm-$ASM.o -o $BUILD/tiny-asm-$ASM-$CC
+
+    echo "$ $BUILD/tiny-asm-$ASM-$CC ; echo \$?"
+    $BUILD/tiny-asm-$ASM-$CC ; echo $?
+
+    echo "$ ls -l $BUILD/tiny-asm-$ASM-$CC"
+    ls -l $BUILD/tiny-asm-$ASM-$CC
+
+    echo ""
+done
+
+echo "==============="
+
 # assembly without standard system startup files
 
 # assembly without standard system startup files or libraries
@@ -103,3 +123,5 @@ for CC in $CC_LIST; do
 
     echo ""
 done
+
+echo "==============================="
